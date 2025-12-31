@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <h2>Variab le Test Page</h2>
+    <h3>Variable Test Page</h3>
+    <div style="margin: 0">
+      اختبار المتغيرات في جافا سكريبت
       <p id="string"></p>
       <p id="num"></p>
-     <p id="boolean"></p>
-     <p id="array"></p>
-     <p id="object"></p>
-    <script>
-      var user = "admin";
-      let a = 5;
-      let isActive = true;
-      let data = [1, 2, 3, 4, 5];
-      let studnt = { name: "ali", age: 20, class: 5 };
-      document.getElementById("num").innerText = typeof user;
-      document.getElementById("string").innerText = typeof user;
-      document.getElementById("boolean").innerText = typeof user;
-      document.getElementById("array").innerText = typeof user;
-      document.getElementById("object").innerText = typeof user;
+      <p id="boolean"></p>
+      <p id="array"></p>
+      <p id="object"></p>
+    </div>
 
-      let x = 10;
-      let y = 5;
-      console.log(x * y);
+    <script>
+      var user = "admin",
+        a = 5,
+        isActive = true,
+        data = [1, 2, 3, 4, 5],
+        studnt = { name: "ali", age: 20, class: 5 };
+      document.getElementById("num").innerText = typeof user;
+      document.getElementById("num").style.color = "blue";
+      document.getElementById("string").innerText = typeof a;
+      document.getElementById("string").style.color = "red";
+      document.getElementById("boolean").innerText = typeof isActive;
+      document.getElementById("boolean").style.color = "green";
+      document.getElementById("array").innerText = typeof data;
+      document.getElementById("array").style.color = "orange";
+      document.getElementById("object").innerText = typeof studnt;
+      document.getElementById("object").style.color = "purple";
+      // تعريف المتغيرات
+      let x = 10; // متغير رقم صحيح
+      let y = 5; // متغير رقم صحيح
+
+      // طباعة قيم المتغيرات في Console
+      console.log("قيمة x =", x); // يعرض: قيمة x = 10
+      console.log("قيمة y =", y); // يعرض: قيمة y = 5
+
+      // إجراء عملية ضرب وطباعة النتيجة
+      let z = x * y; // تخزين حاصل الضرب في متغير z
+      console.log("حاصل ضرب x * y =", z); // يعرض: حاصل ضرب x * y = 50
     </script>
   </body>
 </html>
-

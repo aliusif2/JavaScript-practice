@@ -1,1 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>حساب الكمية</title>
+  </head>
+  <body>
+    <input type="number" id="price" name="price" placeholder="السعر" />
+    <input type="number" id="qty" name="price" placeholder="الكمية" />
+    <button
+      onclick="
+    total = document.getElementById('price').value * 
+            document.getElementById('qty').value;
+    document.getElementById('result').innerText = total;
+  "
+    >
+      احسب
+    </button>
+    <p style="text-align: right">المجموع: <span id="result">0</span></p>
+  </body>
+</html>
 

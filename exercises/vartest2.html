@@ -1,22 +1,49 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
-    <title>حساب الكمية</title>
+    <title>Math Operations Example</title>
   </head>
   <body>
-    <input type="number" id="price" name="price" placeholder="السعر" />
-    <input type="number" id="qty" name="price" placeholder="الكمية" />
-    <button
-      onclick="
-    total = document.getElementById('price').value * 
-            document.getElementById('qty').value;
-    document.getElementById('result').innerText = total;
-  "
-    >
-      احسب
-    </button>
-    <p style="text-align: right">المجموع: <span id="result">0</span></p>
+    <h2 id="title">Basic Math Operations</h2>
+    Number 1:<input type="number" id="num1" /><br />
+    Number 2:<input type="number" id="num2" /><br />
+    <button onclick="calculate()">Calculate</button>
+    <button onclick="changeColor()">غير لون الخلفية</button>
+    <p id="sum"></p>
+    <p id="sub"></p>
+    <p id="mul"></p>
+    <p id="div"></p>
+    <script>
+      function calculate() {
+        let n1 = Number(document.getElementById("num1").value);
+        let n2 = Number(document.getElementById("num2").value);
+        // العمليات الحسابية
+        document.getElementById("sum").innerText = "Sum = " + (n1 + n2);
+        document.getElementById("sub").innerText = "Subtraction = " + (n1 - n2);
+        document.getElementById("mul").innerText = "Multip = " + n1 * n2;
+        document.getElementById("div").innerText = "Division = " + n1 / n2;
+        // تلوين العناصر باستخدام JavaScript
+        document.getElementById("sum").style.color = "green";
+        document.getElementById("sub").style.color = "blue";
+        document.getElementById("mul").style.color = "orange";
+        document.getElementById("div").style.color = "red";
+        // تغيير لون العنوان
+        document.getElementById("title").style.color = "purple";
+        document.getElementsByTagName("button").style.color = "purple";
+      }
+
+      function changeColor() {
+        // هذا السطر يغير لون خلفية الجسم (body) في الصفحة
+        document.body.style.backgroundColor = "lightblue";
+      }
+      function sayHello() {
+        console.log("أهلاً بك!");
+      }
+
+      // استدعاء الدالة 3 مرات في أماكن مختلفة
+      sayHello();
+      sayHello();
+      sayHello();
+    </script>
   </body>
 </html>
-

@@ -1,1 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Variable Test Page 2</title>
+  </head>
+  <body>
+    <h2>طريقة حساب</h2>
+    السعر:<input type="number" id="price" name="price" /><br />
+    الكمية:<input type="number" id="quantity" name="quantity" /><br /><br />
+    <button onclick="calculateTotal()">Calculate Total</button>
+    <p id="result"></p>
+    <script>
+      function calculateTotal() {
+        let price = document.getElementById("price").value;
+        let quantity = document.getElementById("quantity").value;
+        let total = price * quantity;
+        document.getElementById("result").innerText = "المجموع = " + total;
+      }
+    </script>
+  </body>
+</html>
 

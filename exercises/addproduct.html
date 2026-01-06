@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>قائمة المنتجات</title>
+  </head>
+  <body>
+    <ul id="products"></ul>
+    <button onclick="addProduct()">إضافة منتج</button>
+    <script>
+      let products = ["منتج 1", "منتج 2", "منتج 3", "منتج"];
+      function addProduct() {
+        for (let i = 0; i < products.length; i++) {
+          let li = document.createElement("li");
+          li.textContent = products[i];
+          document.getElementById("products").appendChild(li);
+        }
+      }
+    </script>
+  </body>
+</html>

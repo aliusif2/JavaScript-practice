@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Variable Test Page 2</title>
+  </head>
+  <body>
+    <h2>طريقة حساب الكمية- تعليمي</h2>
+    <p id="result" style="color: red"></p>
+    السعر<input type="number" id="price" name="price" /><br />
+    الكمية<input type="number" id="quantity" name="quantity" /><br /><br />
+    <button onclick="calculateTotal()">حساب الكمية</button>
+    <script>
+      function calculateTotal() {
+        let price = document.getElementById("price").value;
+        let quantity = document.getElementById("quantity").value;
+        // التحقق من الحقول الفارغة
+        if (price === "" && quantity === "") {
+          document.getElementById("result").innerText =
+            "الرجاء إدخال السعر والكمية";
+          return;
+        }
+        if (price === "") {
+          document.getElementById("result").innerText = "الرجاء إدخال السعر";
+          return;
+        }
+        if (quantity === "") {
+          document.getElementById("result").innerText = "الرجاء إدخال الكمية";
+          return;
+        }
+        let total = Number(price) * Number(quantity);
+        document.getElementById("result").style.color = "green";
+        document.getElementById("result").innerText = "الإجمالي = " + total;
+      }
+    </script>
+  </body>
+</html>

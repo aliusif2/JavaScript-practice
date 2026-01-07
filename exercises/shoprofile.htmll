@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الملف الشخصي للمستخدم</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- font-awesomeمكتبة-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h3>إدخال بيانات المستخدم</h3>
+      <form id="userForm" onsubmit="showProfile(); return false;">
+        <div class="form-group">
+          <label for="name">الاسم:</label>
+          <input type="text" id="name" placeholder="الاسم الكامل" required />
+
+          <label for="role">الصلاحية:</label>
+          <input type="text" id="role" placeholder="مثال: Admin" required />
+
+          <button type="submit">عرض الملف</button>
+        </div>
+      </form>
+
+      <section id="profile" aria-label="الملف الشخصي"></section>
+
+      <script>
+        const profile = document.getElementById("profile");
+
+        function showProfile() {
+          const name = document.getElementById("name").value;
+          const role = document.getElementById("role").value;
+
+          const now = new Date();
+          const currentDate = now.toLocaleDateString();
+          const currentTime = now.toLocaleTimeString();
+
+          // إظهار قسم الملف الشخصي
+          profile.style.display = "block";
+
+          // تحديث محتوى الملف الشخصي
+          profile.innerHTML = `
+      <div class="profile-card">
+          <h3>بيانات الملف الشخصي</h3>
+          <p><i class="fas fa-user"></i> <strong>الاسم:</strong> ${name}</p>
+          <p><i class="fas fa-key"></i> <strong>الصلاحية:</strong> ${role}</p>
+          <p><i class="fas fa-calendar-alt"></i> <strong>التاريخ:</strong> ${currentDate}</p>
+          <p><i class="fas fa-clock"></i> <strong>الوقت:</strong> ${currentTime}</p>
+      </div>
+    `;
+        }
+      </script>
+    </div>
+  </body>
+</html>

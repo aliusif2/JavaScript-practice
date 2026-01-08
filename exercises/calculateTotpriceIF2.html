@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Variable Test Page 2</title>
+    <style>
+      /* إعدادات المتصفح الأساسية */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f0f2f5;
+        color: #333;
+        line-height: 1.4; /* تقليل ارتفاع السطر */
+        padding: 10px; /* تقليل الهامش الخارجي للصفحة */
+        direction: rtl;
+      }
+
+      /* الحاوية الرئيسية */
+      .container {
+        max-width: 500px; /* تقليل عرض الحاوية قليلاً */
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 15px; /* تقليل الحشو الداخلي */
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      h2 {
+        text-align: center;
+        color: #1a73e8;
+        margin-bottom: 10px; /* تصحيح الخطأ الإملائي [x] */
+        font-size: 1.1rem; /* تكبير الحجم قليلاً ليكون مقروءاً */
+      }
+
+      /* منطقة الإدخال */
+      .input-group {
+        background: #f8f9fa;
+        padding: 12px; /* تقليل الحشو الداخلي */
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        margin-bottom: 12px; /* تقليل المسافة أسفل الصندوق */
+      }
+
+      .input-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px; /* تقليل الفراغات بين الحقول */
+      }
+
+      .input-fields input:first-child {
+        grid-column: span 2;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px 10px; /* تقليل حشو الحقول */
+        border: 1px solid #ddd; /* تقليل سمك الإطار */
+        border-radius: 6px;
+        font-size: 0.9rem;
+        outline: none;
+      }
+
+      /* الأزرار */
+      button {
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .btn-add {
+        background-color: #24b47e;
+        color: white;
+        width: 100%;
+        margin-top: 10px; /* تقليل المسافة فوق الزر */
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+
+      .btn-calc {
+        background-color: #1a73e8;
+        color: white;
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        margin-top: 10px;
+      }
+
+      /* ملخص الفاتورة */
+      .summary {
+        margin-top: 15px; /* تقليل المسافة العلوية */
+        padding: 12px;
+        background: #e8f0fe;
+        border-radius: 8px;
+        border-right: 4px solid #1a73e8;
+      }
+
+      .summary p {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px; /* تقليل المسافة بين الأسطر */
+        font-size: 0.9rem;
+      }
+
+      .total-price {
+        font-size: 1.1rem;
+        color: #d93025;
+        margin-top: 5px;
+        padding-top: 5px;
+        border-top: 1px solid #ced4da;
+      }
+
+      .error {
+        background-color: #fce8e6;
+        color: #d93025;
+        padding: 8px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        font-size: 0.8rem;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>طريقة حساب الكمية- تعليمي</h2>
+    <p style="color: green; text-align: center">
+      Use <span style="color: #1a73e8"> if else</span> condition
+      <span style="color: #ef0b12">without Return</span>
+    </p>
+    <p id="result" style="color: red"></p>
+    السعر<input type="number" id="price" name="price" /><br />
+    الكمية<input type="number" id="quantity" name="quantity" /><br /><br />
+    <button class="btn-calc" onclick="calculateTotal()">حساب الكمية</button>
+    <script>
+      function calculateTotal() {
+        let price = document.getElementById("price").value;
+        let quantity = document.getElementById("quantity").value;
+        let result = document.getElementById("result");
+
+        if (price === "" && quantity === "") {
+          result.style.color = "red";
+          result.innerText = "الرجاء إدخال السعر والكمية";
+        } else if (price === "") {
+          result.style.color = "red";
+          result.innerText = "الرجاء إدخال السعر";
+        } else if (quantity === "") {
+          result.style.color = "red";
+          result.innerText = "الرجاء إدخال الكمية";
+        } else {
+          let total = Number(price) * Number(quantity);
+          result.style.color = "green";
+          result.innerText = "الإجمالي = " + total;
+        }
+      }
+    </script>
+  </body>
+</html>

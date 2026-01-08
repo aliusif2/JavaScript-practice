@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الملف الشخصي للمستخدم</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .error {
+        color: red;
+        font-size: 12px;
+        display: block;
+        margin-top: 5px;
+      }
+      .success {
+        color: green;
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>مرحبا بك في ملفك الشخصي</h2>
+      <p>لن يعمل رابط جوجل بالأسفل إلا بعد كتابة بيانات صحيحة.</p>
+
+      <form id="userForm" action="">
+        <div>
+          <label>اسم المستخدم:</label>
+          <input type="text" name="username" placeholder="أدخل اسمك" />
+          <span id="userError" class="error"></span>
+        </div>
+        <br />
+        <div>
+          <label>العمر:</label>
+          <input type="text" name="age" placeholder="أدخل عمرك" />
+          <span id="ageError" class="error"></span>
+        </div>
+        <br />
+        <button type="submit">إرسال النموذج</button>
+        <span id="mainMessage"></span>
+      </form>
+      <br />
+      <a id="googleLink" href="https://www.google.com/">انتقل إلى جوجل</a>
+    </div>
+
+    <script>
+      let userinput = document.querySelector("[name='username']");
+      let ageinput = document.querySelector("[name='age']");
+      let userError = document.getElementById("userError");
+      let ageError = document.getElementById("ageError");
+      let mainMessage = document.getElementById("mainMessage");
+      let googleLink = document.getElementById("googleLink");
+
+      // وظيفة عامة للتحقق من صحة البيانات
+      function checkValidation() {
+        let isUserValid =
+          userinput.value !== "" && userinput.value.length <= 10;
+        let isAgeValid = ageinput.value !== "";
+
+        // تحديث رسائل الخطأ بصرياً
+        userError.textContent = isUserValid
+          ? ""
+          : "الاسم مطلوب (أقل من 10 أحرف)";
+        ageError.textContent = isAgeValid ? "" : "يرجى إدخال العمر";
+
+        return isUserValid && isAgeValid;
+      }
+
+      // عند إرسال النموذج
+      document.forms[0].onsubmit = function (e) {
+        if (!checkValidation()) {
+          e.preventDefault(); // منع الإرسال إذا كانت البيانات خطأ
+          mainMessage.textContent = "برجاء تصحيح البيانات أولاً";
+          mainMessage.className = "error";
+        } else {
+          mainMessage.textContent = "تم إرسال النموذج بنجاح";
+          mainMessage.className = "success";
+        }
+      };
+
+      // منع الرابط من العمل إلا إذا كانت البيانات صحيحة
+      googleLink.onclick = function (event) {
+        if (!checkValidation()) {
+          event.preventDefault(); // منع الانتقال لجوجل
+          alert("لا يمكنك الانتقال إلى جوجل إلا بعد ملء البيانات بشكل صحيح!");
+        } else {
+          console.log("البيانات سليمة، جاري الانتقال...");
+          // هنا سيتم الانتقال للرابط بشكل طبيعي
+        }
+      };
+    </script>
+  </body>
+</html>

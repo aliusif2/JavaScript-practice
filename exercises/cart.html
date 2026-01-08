@@ -1,1 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>نظام سلة المشتريات</title>
+
+     <style>
+  /* إعدادات المتصفح الأساسية */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5; 
+    color: #333;
+    line-height: 1.6;
+    padding: 40px 20px;
+    direction: rtl;
+  }
+
+  /* الحاوية الرئيسية */
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); 
+  }
+
+  h2 {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+  }
+
+  /* حقول الإدخال */
+  .input-group {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 20px;
+  }
+
+  .input-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px;
+  }
+
+  .input-fields input:first-child {
+    grid-column: span 2; 
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: #1a73e8; 
+  }
+
+  /* الأزرار */
+  button {
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-add {
+    background-color: #24b47e;
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .btn-add:hover {
+    background-color: #1d9064;
+    transform: translateY(-1px);
+  }
+
+  .btn-calc {
+    background-color: #1a73e8;
+    color: white;
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(26, 115, 232, 0.2);
+  }
+
+  .btn-calc:hover {
+    background-color: #1557b0;
+    box-shadow: 0 6px 12px rgba(26, 115, 232, 0.3);
+  }
+
+  /* الجدول */
+ 
+  
+  .summary {
+    margin-top: 30px;
+    padding: 20px;
+    background: #e8f0fe;
+    border-radius: 10px;
+    border-right: 5px solid #1a73e8;
+  }
+
+  .summary p {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .total-price {
+    font-size: 1.3rem;
+    color: #d93025;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
+
+  .error {
+    background-color: #fce8e6;
+    color: #d93025;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    display: none; 
+  }
+</style>
+    </style>
+  </head>
+  <body>
+    <h2> إدارة سلة المشتريات</h2>
+
+    <div class="input-group">
+      <input type="text" id="itemName" placeholder="اسم المنتج (مثلاً: شاشة)" />
+      <input type="number" id="itemPrice" placeholder="السعر" />
+      <input type="number" id="itemQty" placeholder="الكمية" />
+      <button class="btn-add" onclick="addItem()">إضافة للسلة +</button>
+      <p id="inputError" class="error"></p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>المنتج</th>
+          <th>السعر</th>
+          <th>الكمية</th>
+          <th>الإجمالي الفرعي</th>
+        </tr>
+      </thead>
+      <tbody id="cartTableBody"></tbody>
+    </table>
+
+    <button class="btn-calc" onclick="calculateFinalTotal()">
+      إتمام الفاتورة وحساب الخصم
+    </button>
+
+    <div id="finalSummary" class="summary" style="display: none">
+      <h3 id="totalBefore"></h3>
+      <h3 id="discountInfo" style="color: red"></h3>
+      <h2 id="totalAfter" style="color: green"></h2>
+    </div>
+
+    <script>
+      // مصفوفة لتخزين المنتجات
+      let cart = [];
+
+      function addItem() {
+        let name = document.getElementById("itemName").value;
+        let price = document.getElementById("itemPrice").value;
+        let qty = document.getElementById("itemQty").value;
+        let errorMsg = document.getElementById("inputError");
+
+        // 1. التحقق من صحة الإدخالات
+        if (name === "" || price <= 0 || qty <= 0) {
+          errorMsg.innerText = "⚠️ يرجى إدخال بيانات صحيحة للمنتج.";
+          return;
+        }
+        errorMsg.innerText = "";
+
+        // 2. إضافة المنتج إلى السلة
+        let product = {
+          name: name,
+          price: Number(price),
+          quantity: Number(qty),
+          subtotal: Number(price) * Number(qty),
+        };
+
+        cart.push(product);
+        updateTable(); // تحديث الجدول فور الإضافة
+
+        // تصفير الحقول
+        document.getElementById("itemName").value = "";
+        document.getElementById("itemPrice").value = "";
+        document.getElementById("itemQty").value = "";
+      }
+
+      function updateTable() {
+        let tableBody = document.getElementById("cartTableBody");
+        tableBody.innerHTML = ""; // مسح الجدول لإعادة بنائه
+
+        // 3.  لاضافة المنتجات إلى الجدول 
+        for (let i = 0; i < cart.length; i++) {
+          let row = `<tr>
+                    <td>${cart[i].name}</td>
+                    <td>${cart[i].price} جنيه</td>
+                    <td>${cart[i].quantity}</td>
+                    <td>${cart[i].subtotal} جنيه</td>
+                </tr>`;
+          tableBody.innerHTML += row;
+        }
+      }
+
+      function calculateFinalTotal() {
+        if (cart.length === 0) {
+          alert("السلة فارغة!");
+          return;
+        }
+
+        let totalSum = 0;
+        //   حساب الإجمالي قبل الخصم 
+        for (let i = 0; i < cart.length; i++) {
+          totalSum += cart[i].subtotal;
+        }
+
+        let discount = 0;
+        let finalPrice = totalSum;
+
+        // 4. الخصومات بناءً على الإجمالي
+        if (totalSum >= 1000) {
+          discount = totalSum * 0.15; // خصم 15% للطلبات الكبيرة
+          finalPrice = totalSum - discount;
+          document.getElementById(
+            "discountInfo"
+          ).innerText = `تم تطبيق خصم ذهبي (15%): -${discount} جنيه`;
+        } else if (totalSum >= 500) {
+          discount = totalSum * 0.05; // خصم 5%
+          finalPrice = totalSum - discount;
+          document.getElementById(
+            "discountInfo"
+          ).innerText = `تم تطبيق خصم فضي (5%): -${discount} جنيه`;
+        } else {
+          document.getElementById("discountInfo").innerText =
+            "لا يوجد خصم حالياً (الخصم يبدأ من 500 جنيه)";
+          finalPrice = totalSum;
+        }
+
+        // عرض النتائج
+        document.getElementById("finalSummary").style.display = "block";
+        document.getElementById(
+          "totalBefore"
+        ).innerText = `الإجمالي قبل الخصم: ${totalSum} جنيه`;
+        document.getElementById(
+          "totalAfter"
+        ).innerText = `المبلغ المطلوب دفعه: ${finalPrice} جنيه`;
+      }
+    </script>
+  </body>
+</html>
 

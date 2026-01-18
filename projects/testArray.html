@@ -1,0 +1,213 @@
+<!--    برنامج يدخل مصفوفة ويقوم بطباعة عتها واظهار اكبر رقم اصفر رقم متوسط-->
+<!doctype html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <title>نظام تسجيل طلاب الجامعة</title>
+    <style>
+      body {
+        font-family: Arial;
+        background: #f2f2f2;
+        direction: rtl;
+      }
+
+      .container {
+        width: 80%;
+        background: white;
+        padding: 20px;
+        margin: 50px auto;
+        border-radius: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 15px;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+      }
+
+      .delete {
+        background: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>برنامج لاستقبال مصفوفة</h2>
+      <p>
+        يقوم البرنامج بإدخال المصفوفة وطباعتها وطباعة اكبر رقم واصغر رقم المتوسط
+        والمجموعة
+      </p>
+      <input type="text" id="arry" placeholder="ادخل ارقام المصفوفة " />
+      <!--
+      <input type="text" id="id" placeholder="الرقم الجامعي" />
+      <input type="text" id="college" placeholder="الكلية" />
+      -->
+      <button onclick="prinarry()">احسب</button>
+      <p id="showArray"></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>طول المصفوفة</th>
+            <th>المجموع</th>
+            <th>المتوسط</th>
+            <th>اصغر رقم</th>
+            <th>اكبر رقم</th>
+          </tr>
+        </thead>
+        <tbody id="arrycalc"></tbody>
+      </table>
+    </div>
+    <p id="test"></p>
+    <div id="one"></div>
+    <script>
+      /*
+      //طريقة  تحويل النص إلى مصفوفة:
+        let arr = document
+          .getElementById("arry")
+          .value.trim()
+          .split(",")
+          .map(Number);
+          */ AbstractRange;
+      function prinarry() {
+        let input = document.getElementById("arry").value.trim();
+
+        if (input === "") {
+          alert("الرجاء إدخال المصفوفة");
+          return;
+        }
+
+        let arr = input.split(",").map(Number);
+
+        if (arr.some(isNaN)) {
+          alert("الرجاء إدخال أرقام صحيحة مفصولة بفواصل");
+          return;
+        }
+
+        // طباعة عناصر المصفوفة
+        document.getElementById("showArray").innerText =
+          "عناصر المصفوفة: " + arr.join(" , ");
+
+        let length = arr.length;
+        let sum = 0;
+        for (let i = 0; i < length; i++) {
+          sum += arr[i];
+        }
+
+        //method reduce دالة سهمية لتجميع عناصر المصفوفة في قيمة واحدة
+        //let sum = arr.reduce((a, b) => a + b, 0);
+        let avg = sum / length;
+        let max = Math.max(...arr);
+        let min = Math.min(...arr);
+
+        document.getElementById("arrycalc").innerHTML = `
+        <tr>
+          <td>${length}</td>
+          <td>${sum}</td>
+          <td>${avg.toFixed(2)}</td>
+          <td>${min}</td>
+          <td>${max}</td>
+        </tr>
+      `;
+      }
+
+      //method trim() الدالة تستخدم لمنع ادخال او حذف الفراغات في النصوص فقط
+      let text2 = "  10, 20, 30  ";
+      console.log("[" + text2 + "]");
+
+      let text3 = "  10, 20, 30  ";
+      console.log("[" + text3.trim() + "]");
+      console.log("\n");
+
+      // method one var is nums use the pop() method
+      // pop() method remove the element in the array
+      let nums = [1, 2, 3, 4];
+      let removed = nums.pop();
+      console.log(nums); // [1, 2]
+      console.log(removed); // 3
+      console.log(nums.length);
+      console.log("عرض الطريقة الثانية للمصفوفة");
+      console.log("\n"); // اضافة سطر جديد لان consle don't use the <br>
+      // method two var is num use the p
+      let num = [1, 2, 3, 4];
+      num.pop();
+      console.log(num.length);
+      let text = "";
+      loop1: for (let j = 0; j < 5; j++) {
+        loop2: for (let i = 0; i < 5; i++) {
+          if (i === 3) {
+            continue loop1;
+          }
+          text += "j" + j + ",i" + i + "<br>";
+        }
+      }
+      let p = document.createElement("p");
+      p.innerHTML = text;
+      document.body.appendChild(p);
+      document.getElementById("test").innerHTML = text;
+      let tr = document.createElement("tr");
+
+      let td1 = document.createElement("td");
+      let td2 = document.createElement("td");
+
+      td1.textContent = "j=0";
+      td2.textContent = "i=1";
+
+      tr.append(td1, td2);
+      document.querySelector("#myTable tbody").append(tr);
+
+      let matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+      ];
+
+      for (let i = 0; i < matrix.length; i++) {
+        for (let j = 0; j < matrix[i].length; j++) {
+          console.log(matrix[i][j]);
+        }
+      }
+      // الوصول إلى الـ div
+      let div = document.getElementById("one");
+
+      // إنشاء الفقرة الأولى
+      let p1 = document.createElement("p");
+      p1.textContent = "الفقرة الأولى";
+
+      // إنشاء الفقرة الثانية
+      let p2 = document.createElement("p");
+      p2.textContent = "الفقرة الثانية";
+
+      // إضافة الفقرات والنصوص داخل div
+      div.append(p1, " - نص بين الفقرتين - ", p2);
+    </script>
+  </body>
+</html>
